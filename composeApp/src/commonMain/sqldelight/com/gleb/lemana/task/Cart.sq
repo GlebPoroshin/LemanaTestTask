@@ -1,0 +1,16 @@
+CREATE TABLE cart (
+    product_id INTEGER NOT NULL PRIMARY KEY,
+    quantity INTEGER NOT NULL
+);
+
+selectAllCartItems:
+SELECT product_id, quantity FROM cart;
+
+insertProduct:
+INSERT OR REPLACE INTO cart (product_id, quantity) VALUES (?, ?);
+
+deleteProduct:
+DELETE FROM cart WHERE product_id = ?;
+
+updateQuantity:
+UPDATE cart SET quantity = ? WHERE product_id = ?;

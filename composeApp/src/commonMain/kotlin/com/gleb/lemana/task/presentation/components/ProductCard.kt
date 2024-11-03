@@ -1,7 +1,6 @@
 package com.gleb.lemana.task.presentation.components
 
-import com.gleb.lemana.task.presentation.icons.SelectedLike
-import com.gleb.lemana.task.presentation.icons.UnSelectedLike
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,6 +37,10 @@ import com.gleb.lemana.task.presentation.utils.Colors.secondaryGrey
 import com.gleb.lemana.task.presentation.utils.Colors.yellow
 import com.gleb.lemana.task.presentation.utils.SpacerHeight
 import com.gleb.lemana.task.presentation.utils.SpacerWidth
+import lemana.composeapp.generated.resources.Res
+import lemana.composeapp.generated.resources.selected_like
+import lemana.composeapp.generated.resources.uselected_like
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ProductCard(
@@ -67,15 +70,17 @@ fun ProductCard(
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(16.dp))
             )
-            Icon(
+            Image(
                 modifier = Modifier
                     .padding(14.dp)
                     .size(24.dp)
                     .align(Alignment.TopEnd)
                     .clickable { onIsLikedChanged(!isLiked) },
                 contentDescription = "is $title in shopping list",
-                tint = onPrimary,
-                imageVector = if (isLiked) Icons.SelectedLike else Icons.UnSelectedLike,
+                painter = painterResource(
+                    if (isLiked) Res.drawable.selected_like
+                    else Res.drawable.uselected_like
+                ),
             )
             Row(
                 modifier = Modifier
@@ -85,9 +90,7 @@ fun ProductCard(
                 horizontalArrangement = Arrangement.Start
             ) {
                 Icon(
-                    modifier = Modifier
-                        .size(18.dp)
-                        .clickable { onIsLikedChanged(!isLiked) },
+                    modifier = Modifier.size(18.dp),
                     contentDescription = null,
                     imageVector = Icons.Star,
                     tint = yellow
@@ -96,7 +99,7 @@ fun ProductCard(
                 Text(
                     text = rating,
                     style = TextStyle(
-                        color = Color.White,
+                        color = secondaryGrey,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal
                     )

@@ -3,10 +3,11 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.sqlDelight)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinMultiplatform)
+    alias(libs.plugins.composeMultiplatform)
     kotlin("plugin.serialization") version "2.0.21"
 }
 
@@ -17,7 +18,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -28,17 +29,19 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
+            implementation(libs.sqldelight.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.androidx.activity.compose)
         }
 
         iosMain.dependencies {
+            implementation(libs.sqldelight.native)
             implementation(libs.ktor.client.darwin)
         }
 
@@ -52,11 +55,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            //Navigation
-//            implementation(libs.voyager.navigator)
-//            implementation(libs.voyager.bottom.sheet.navigator)
-//            implementation(libs.voyager.tab.navigator)
-//            implementation(libs.voyager.koin)
+            implementation("cafe.adriel.voyager:voyager-navigator:1.1.0-beta02")
+            implementation("cafe.adriel.voyager:voyager-screenmodel:1.1.0-beta02")
+            implementation("cafe.adriel.voyager:voyager-koin:1.1.0-beta02")
 
             //DI
             implementation(libs.koin.core)
@@ -70,7 +71,8 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
 
             implementation(libs.kotlinx.datetime)
-//            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.coroutines)
+
 
             implementation(libs.kotlinx.coroutines.core)
 
@@ -109,7 +111,14 @@ android {
     }
 }
 
+sqldelight {
+    databases {
+        create("LemenaTestAppDb") {
+            packageName.set("com.gleb.lemana.task")
+        }
+    }
+}
+
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-
