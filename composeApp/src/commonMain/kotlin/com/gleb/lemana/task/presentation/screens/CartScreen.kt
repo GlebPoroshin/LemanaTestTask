@@ -10,11 +10,3 @@ class CartScreen : Screen {
 
     }
 }
-
-class ShoppingListScreen : Screen {
-
-    @Composable
-    override fun Content() {
-
-    }
-}

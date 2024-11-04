@@ -18,7 +18,11 @@ fun ProductNetworkModel.asDomainModel(): ProductDomainModel =
     ProductDomainModel(
         id = id,
         title = title,
-        description = description.split(".").first(),
+        description = description
+            .split(".")
+            .first().split(" ")
+            .take(10)
+            .toString(),
         image = image,
         price = price.toString(),
         rating = rating.rate.toString()

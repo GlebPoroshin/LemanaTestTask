@@ -9,4 +9,6 @@ interface ProductsService {
     ): Result<List<ProductDomainModel>>
 
     suspend fun getProduct(id: Int): Result<ProductDomainModel>
+
+    suspend fun fetchProductsByIds(ids: List<Int>): Result<List<ProductDomainModel>>
 }

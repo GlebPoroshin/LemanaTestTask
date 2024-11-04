@@ -47,4 +47,10 @@ class ProductsServiceImpl(
             Result.failure(exception)
         }
     }
+
+    override suspend fun fetchProductsByIds(ids: List<Int>): Result<List<ProductDomainModel>> {
+        return fetchAll().map { products ->
+            products.filter { it.id in ids }
+        }
+    }
 }
