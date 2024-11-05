@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.koinScreenModel
+import com.gleb.lemana.task.presentation.components.ErrorDisplayingComponent
 import com.gleb.lemana.task.presentation.components.PrimaryButton
 import com.gleb.lemana.task.presentation.components.ShoppingListItem
 import com.gleb.lemana.task.presentation.utils.Colors.primary
@@ -45,20 +46,14 @@ class ShoppingListScreen : Screen {
                 val products = currentState.products
                 val selectedItems = currentState.selectedItems
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 16.dp, end = 16.dp, top = 48.dp)
-                ) {
                     if (products.isNotEmpty()) {
                         LazyColumn(
-                            modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                            modifier = Modifier.padding(start = 16.dp, end = 24.dp),
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.Top)
                         ) {
                             item {
                                 Text(
-                                    modifier = Modifier.align(Alignment.Center),
                                     text = "Shopping List",
                                     style = TextStyle(
                                         color = primary,
@@ -91,7 +86,6 @@ class ShoppingListScreen : Screen {
                                     text = "Add selected to cart",
                                     trailingIcon = Icons.Outlined.ShoppingCart,
                                     modifier = Modifier
-//                                        .align(Alignment.BottomCenter)
                                         .padding(bottom = 6.dp),
                                     onClick = {
                                         screenModel.processIntent(
@@ -103,23 +97,27 @@ class ShoppingListScreen : Screen {
                             item { Spacer(Modifier.height(64.dp)) }
                         }
                     } else {
-                        Text(
-                            modifier = Modifier.align(Alignment.Center),
-                            text = "Shopping list is empty :(",
-                            style = TextStyle(
-                                color = primary,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                textAlign = TextAlign.Center
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            Text(
+                                modifier = Modifier.align(Alignment.Center),
+                                text = "Shopping list is empty :(",
+                                style = TextStyle(
+                                    color = primary,
+                                    fontSize = 24.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Center
+                                )
                             )
-                        )
+                        }
                     }
-                }
             }
             is ShoppingListScreenModel.State.Error -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = currentState.message)
-                }
+                ErrorDisplayingComponent(
+                    message = currentState.message,
+                    onClick = {
+                        screenModel.processIntent(ShoppingListScreenModel.Intent.LoadShoppingList)
+                    }
+                )
             }
         }
     }

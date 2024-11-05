@@ -27,10 +27,11 @@ import com.gleb.lemana.task.presentation.utils.Colors.secondaryGrey
 @Composable
 fun AddToCartComponent(
     inCartCount: Int,
-    onCartCountChange: (Int) -> Unit
+    onCartCountChange: (Int) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.End),
         verticalAlignment = Alignment.CenterVertically
     ) {
