@@ -73,8 +73,8 @@ class MainScreenModel(
                     }
                     mutableState.value = State.Content(updatedProducts)
                 }
-                .onFailure { throwable ->
-                    mutableState.value = State.Error(throwable.message ?: "Неизвестная ошибка")
+                .onFailure { _ ->
+                    mutableState.value = State.Error("Uuuups something went wrong")
                 }
         }
     }

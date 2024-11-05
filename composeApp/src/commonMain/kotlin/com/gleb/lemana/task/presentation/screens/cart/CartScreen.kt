@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.koin.getScreenModel
 import com.gleb.lemana.task.presentation.components.CartItem
 import com.gleb.lemana.task.presentation.components.ErrorDisplayingComponent
 import com.gleb.lemana.task.presentation.utils.Colors.primary
@@ -30,7 +30,7 @@ class CartScreen : Screen {
 
     @Composable
     override fun Content() {
-        val screenModel: CartScreenModel = koinScreenModel()
+        val screenModel: CartScreenModel = getScreenModel()
         val state by screenModel.state.collectAsState()
 
         when (val currentState = state) {

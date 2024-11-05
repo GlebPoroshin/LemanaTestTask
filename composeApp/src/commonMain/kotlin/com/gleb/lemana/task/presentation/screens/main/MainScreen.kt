@@ -1,9 +1,7 @@
 package com.gleb.lemana.task.presentation.screens.main
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -11,9 +9,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.koinScreenModel
+import cafe.adriel.voyager.koin.getScreenModel
 import com.gleb.lemana.task.presentation.components.ErrorDisplayingComponent
-import com.gleb.lemana.task.presentation.components.GradientSeparator
 import com.gleb.lemana.task.presentation.components.ProductList
 import com.gleb.lemana.task.presentation.utils.Colors.primary
 
@@ -21,7 +18,7 @@ class MainScreen : Screen {
 
     @Composable
     override fun Content() {
-        val screenModel = koinScreenModel<MainScreenModel>()
+        val screenModel = getScreenModel<MainScreenModel>()
         val state by screenModel.state.collectAsState()
 
         when (val currentState = state) {
